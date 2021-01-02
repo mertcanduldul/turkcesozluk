@@ -3,17 +3,20 @@ import { View, Text, Button } from 'react-native'
 import { createStackNavigator } from "@react-navigation/stack";
 
 import DetailView from './detail'
+import Box from '../components/box'
+import BoxCenter from '../components/box-center'
 
 const HomeStack = createStackNavigator();
 function SearchView({ navigation }) {
     return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <BoxCenter>
             <Text>Settings screen</Text>
             <Button
                 title="Go to Details"
                 onPress={() => navigation.navigate('Detail')}
             />
-        </View>
+            <Box size={20} bg="blue" mt={20} />
+        </BoxCenter>
     );
 }
 
