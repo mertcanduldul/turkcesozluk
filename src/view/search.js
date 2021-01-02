@@ -17,7 +17,6 @@ function SearchView({ navigation }) {
                 title="Go to Details"
                 onPress={() => navigation.navigate('Detail')}
             />
-            <Box size={20} bg="blue" mt={20} />
         </BoxCenter>
     );
 }
