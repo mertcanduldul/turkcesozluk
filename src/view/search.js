@@ -6,6 +6,8 @@ import DetailView from './detail'
 import Box from '../components/box'
 import BoxCenter from '../components/box-center'
 
+import { Bookmark, Clock, Search } from '../components/icons'
+
 const HomeStack = createStackNavigator();
 function SearchView({ navigation }) {
     return (
