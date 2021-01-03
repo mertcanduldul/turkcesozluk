@@ -32,10 +32,7 @@ function App() {
         <ThemeProvider theme={theme}>
             <Box flex={1} as={SafeAreaView}>
                 <NavigationContainer>
-                    <Tab.Navigator
-                        initialRouteName="Search"
-                        tabBar={props => <TabBar {...props} />}
-                    >
+                    <Tab.Navigator initialRouteName="Search" tabBar={props => <TabBar {...props} />}>
                         <Tab.Screen name="Favorite" component={FavoriteView} />
                         <Tab.Screen name="Search" component={SearchStack} />
                         <Tab.Screen name="History" component={HistoryView} />
