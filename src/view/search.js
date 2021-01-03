@@ -1,32 +1,23 @@
 import React from 'react'
-import { View, Text, Button } from 'react-native'
+import { Button } from 'react-native'
 import { createStackNavigator } from "@react-navigation/stack";
 
-import DetailView from './detail'
 import Box from '../components/box'
-import BoxCenter from '../components/box-center'
-
-import { Bookmark, Clock, Search } from '../components/icons'
+import Logo from '../components/icons/Logo'
+import Search from '../components/search'
 
 const HomeStack = createStackNavigator();
 function SearchView({ navigation }) {
     return (
-        <BoxCenter>
-            <Text>Settings screen</Text>
-            <Button
-                title="Go to Details"
-                onPress={() => navigation.navigate('Detail')}
-            />
-        </BoxCenter>
-    );
-}
-
-function SearchStack() {
-    return (
-        <HomeStack.Navigator>
-            <HomeStack.Screen name="Search" component={SearchView} />
-            <HomeStack.Screen name="Details" component={DetailView} />
-        </HomeStack.Navigator>
+        <Box>
+            <Button title="Go to Details" onPress={() => navigation.navigate('Detail')} />
+            <Box>
+                <Logo width={120} color="red" />
+            </Box>
+            <Box p={10}>
+                <Search />
+            </Box>
+        </Box>
     );
 }
 export default SearchView;
