@@ -6,7 +6,8 @@ import {
   size,
   space,
   flexbox,
-  borderRadius
+  borderRadius,
+  border,
 } from 'styled-system'
 
 const Box = styled(View)(
@@ -15,7 +16,8 @@ const Box = styled(View)(
     space,
     color,
     size,
-    borderRadius
+    borderRadius,
+    border,
   )
 )
 
