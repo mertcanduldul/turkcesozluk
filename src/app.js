@@ -4,6 +4,7 @@ import { ThemeProvider } from 'styled-components'
 import { NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { createStackNavigator } from '@react-navigation/stack'
+import { SafeAreaProvider } from 'react-native-safe-area-context'
 
 import TabBar from './components/tab-bar'
 
@@ -20,7 +21,7 @@ const HomeStack = createStackNavigator();
 
 function SearchStack() {
     return (
-        <HomeStack.Navigator>
+        <HomeStack.Navigator headerMode="none">
             <HomeStack.Screen name="Search" component={SearchView} />
             <HomeStack.Screen name="Detail" component={DetailView} />
         </HomeStack.Navigator>
@@ -30,15 +31,17 @@ function SearchStack() {
 function App() {
     return (
         <ThemeProvider theme={theme}>
-            <Box flex={1} as={SafeAreaView}>
-                <NavigationContainer>
-                    <Tab.Navigator initialRouteName="Search" tabBar={props => <TabBar {...props} />}>
-                        <Tab.Screen name="Favorite" component={FavoriteView} />
-                        <Tab.Screen name="Search" component={SearchStack} />
-                        <Tab.Screen name="History" component={HistoryView} />
-                    </Tab.Navigator>
-                </NavigationContainer>
-            </Box>
+            <SafeAreaProvider>
+                <Box flex={1} as={SafeAreaView}>
+                    <NavigationContainer>
+                        <Tab.Navigator initialRouteName="Search" tabBar={props => <TabBar {...props} />}>
+                            <Tab.Screen name="Favorite" component={FavoriteView} />
+                            <Tab.Screen name="Search" component={SearchStack} />
+                            <Tab.Screen name="History" component={HistoryView} />
+                        </Tab.Navigator>
+                    </NavigationContainer>
+                </Box>
+            </SafeAreaProvider>
         </ThemeProvider>
     );
 }
