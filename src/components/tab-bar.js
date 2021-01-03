@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, Platform } from 'react-native'
 
 import Button from './button'
 import { Search, Bookmark, Clock } from './icons'
@@ -16,7 +16,8 @@ function TabBar({ state, descriptors, navigation }) {
   }
 
   return (
-    <View style={{ flexDirection: 'row' }}>
+    <Box flexDirection="row" pb={Platform.OS == 'ios' ? 20 : 0}
+      style={{ shadowColor: '#000', shadowOpacity: 0.1, shadowRadius: 24 }}>
       {state.routes.map((route, index) => {
         const { options } = descriptors[route.key];
         const label =
@@ -48,13 +49,13 @@ function TabBar({ state, descriptors, navigation }) {
           </Box>
         ) : (
             <Button key={label} pt={6} flexDirection="column" height={56} flex={1} onPress={onPress}>
-              {label === 'History' && <Bookmark color={theme.colors.textLight} />}
-              {label === 'Favorite' && <Clock color={theme.colors.textLight} />}
-              <Box size={3} bg={isFocused ? 'red' : 'white'} mt={6} />
+              {label === 'History' && <Bookmark color={isFocused ? theme.colors.red : theme.colors.textLight} />}
+              {label === 'Favorite' && <Clock color={isFocused ? theme.colors.red : theme.colors.textLight} />}
+              <Box size={4} bg={isFocused ? 'red' : 'white'} mt={6} borderRadius="full" />
             </Button>
           )
       })}
-    </View>
+    </Box>
   );
 }
 
