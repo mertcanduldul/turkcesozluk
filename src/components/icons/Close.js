@@ -1,7 +1,7 @@
 import * as React from 'react';
-import Svg, {Circle, Path} from 'react-native-svg';
+import Svg, {Path} from 'react-native-svg';
 
-function SvgClock(props) {
+function SvgClose(props) {
   return (
     <Svg
       xmlns="http://www.w3.org/2000/svg"
@@ -15,10 +15,9 @@ function SvgClock(props) {
       strokeLinejoin="round"
       className=""
       {...props}>
-      <Circle cx={12} cy={12} r={10} />
-      <Path d="M12 6v6l4 2" />
+      <Path d="M18 6L6 18M6 6l12 12" />
     </Svg>
   );
 }
 
-export default SvgClock;
+export default SvgClose;
