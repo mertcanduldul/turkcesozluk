@@ -1,16 +1,17 @@
 import React from 'react'
-import { ImageBackground, StatusBar, Animated } from 'react-native'
+import { FlatList, StatusBar, Animated } from 'react-native'
 import SafeAreaView from 'react-native-safe-area-view'
-import { useFocusEffect } from '@react-navigation/native'
+import { NavigationContainer, useFocusEffect } from '@react-navigation/native'
 
 import Box from '../components/box'
+import Bg from '../components/bg'
 import Logo from '../components/icons/Logo'
 import Search from '../components/search'
 import theme from '../utils/theme'
-import bg from '../assets/bg.jpg'
 import Text from '../components/text'
+import { CardContainer, CardSummary, CardTitle } from '../components/card'
 
-function SearchView() {
+function SearchView({ navigation }) {
     const [heroHeight] = React.useState(new Animated.Value(285));
     const [isSearchFocus, setSearchFocus] = React.useState(false);
 
@@ -43,13 +44,11 @@ function SearchView() {
             {/*HEARDER */}
             <Box as={Animated.View} position="relative" zIndex={1} height={heroHeight}>
                 {!isSearchFocus &&
-                    <Box as={ImageBackground} source={bg}
-                        style={{ width: '100%', height: '100%' }}>
-                        {/*LOGO*/}
+                    <Bg>
                         <Box flex={1} alignItems="center" justifyContent="center">
                             <Logo width={120} color="white" />
                         </Box>
-                    </Box>}
+                    </Bg>}
                 {/*SEARCH*/}
                 <Box position="absolute" left={0} bottom={isSearchFocus ? 0 : -42} p={16} width="100%">
                     <Search onChangeFocus={status => { setSearchFocus(status) }} />
@@ -57,14 +56,27 @@ function SearchView() {
             </Box>
 
             {/* CONTENT */}
-            <Box bg="white" flex={1} pt={isSearchFocus ? 0 : 26}>
+            <Box bg="softRed" flex={1} pt={isSearchFocus ? 0 : 26}>
                 {isSearchFocus ? (
                     <Box p={30} flex={1}>
                         <Text>History</Text>
                     </Box>
                 ) : (
-                        <Box p={30} flex={1}>
-                            <Text>Öneri</Text>
+                        <Box px={16} py={40} flex={1}>
+                            <Box>
+                                <Text color="textLight">Bir Deyim</Text>
+                                <CardContainer mt={10} onPress={() => navigation.navigate('Detail')}>
+                                    <CardTitle>onpara</CardTitle>
+                                    <CardSummary>çok az (para)</CardSummary>
+                                </CardContainer>
+                            </Box>
+                            <Box mt={40}>
+                                <Text color="textLight">Bir deyim - bir Atasözü</Text>
+                                <CardContainer mt={10}>
+                                    <CardTitle>siyem siyem ağlamak</CardTitle>
+                                    <CardSummary>hafif hafif, ince ince</CardSummary>
+                                </CardContainer>
+                            </Box>
                         </Box>
                     )
                 }
