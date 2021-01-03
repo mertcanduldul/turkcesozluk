@@ -9,9 +9,13 @@ import { Search, Close } from './icons'
 
 import theme from '../utils/theme'
 
-function SearchBox() {
+function SearchBox({ onChangeFocus }) {
     const [value, setValue] = React.useState("");
     const [isFocus, setFocus] = React.useState(false);
+
+    React.useEffect(() => {
+        onChangeFocus(isFocus)
+    }, [isFocus, onChangeFocus]);
 
     const onCancel = () => {
         setFocus(false)
@@ -40,11 +44,11 @@ function SearchBox() {
                     onChangeText={text => setValue(text)}
                 />
 
-                {value.length > 0 &&
+                {value.length > 0 && (
                     <Button onPress={onClear} position="absolute" right={16} top={14}>
                         <Close color={theme.colors.textDark} />
                     </Button>
-                }
+                )}
                 <Button position="absolute" left={16} top={14}>
                     <Search color={theme.colors.textMedium} />
                 </Button>
