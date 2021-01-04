@@ -141,7 +141,7 @@ function SearchView({ navigation }) {
                         <Box px={16} py={40} flex={1}>
                             <Box>
                                 <Text color="textLight">Bir Deyim</Text>
-                                <CardContainer mt={10} onPress={() => navigation.navigate('Detail')}>
+                                <CardContainer mt={10} onPress={(title) => navigation.navigate('Detail', {title:'onpara'})}>
                                     <CardTitle>onpara</CardTitle>
                                     <CardSummary>çok az (para)</CardSummary>
                                 </CardContainer>
