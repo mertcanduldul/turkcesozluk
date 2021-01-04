@@ -60,10 +60,22 @@ const DATA = [
     }
 ]
 
+
 function SearchView({ navigation }) {
     const [heroHeight] = React.useState(new Animated.Value(HEROHEIGHT));
     const [bgOpacity] = React.useState(new Animated.Value(OPACITY));
     const [isSearchFocus, setSearchFocus] = React.useState(false);
+
+    const [homeData, setHomeData] = React.useState(null)
+
+    const getHomeData = async () => {
+        const response = await fetch("https://sozluk.gov.tr/icerik");
+        const data = await response.json();
+        setHomeData(data)
+    }
+    React.useEffect(() => {
+        getHomeData();
+    }, [])
 
     useFocusEffect(
         React.useCallback(() => {
@@ -103,7 +115,7 @@ function SearchView({ navigation }) {
         <Box as={SafeAreaView} flex={1}>
             {/*HEARDER */}
             <Box as={Animated.View} position="relative" zIndex={1} height={heroHeight}>
-                <Box as={Animated.View} opacity={bgOpacity} mt={-44}>
+                <Box as={Animated.View} style={{ opacity: bgOpacity }} mt={-44}>
                     <Bg pt={44} pb={26}>
                         <Box flex={1} alignItems="center" justifyContent="center">
                             <Logo width={120} color="white" />
@@ -140,17 +152,17 @@ function SearchView({ navigation }) {
                 ) : (
                         <Box px={16} py={40} flex={1}>
                             <Box>
-                                <Text color="textLight">Bir Deyim</Text>
-                                <CardContainer mt={10} onPress={(title) => navigation.navigate('Detail', {title:'onpara'})}>
-                                    <CardTitle>onpara</CardTitle>
-                                    <CardSummary>çok az (para)</CardSummary>
+                                <Text color="textLight">Bir Kelime</Text>
+                                <CardContainer mt={10} onPress={(title) => navigation.navigate('Detail', { title: 'onpara' })}>
+                                    <CardTitle>{homeData?.kelime[0].madde}</CardTitle>
+                                    <CardSummary>{homeData?.kelime[0].anlam}</CardSummary>
                                 </CardContainer>
                             </Box>
                             <Box mt={40}>
                                 <Text color="textLight">Bir deyim - bir Atasözü</Text>
                                 <CardContainer mt={10}>
-                                    <CardTitle>siyem siyem ağlamak</CardTitle>
-                                    <CardSummary>hafif hafif, ince ince</CardSummary>
+                                    <CardTitle>{homeData?.atasoz[0].madde}</CardTitle>
+                                    <CardSummary>{homeData?.atasoz[0].anlam}</CardSummary>
                                 </CardContainer>
                             </Box>
                         </Box>
