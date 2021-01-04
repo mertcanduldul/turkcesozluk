@@ -1,5 +1,9 @@
 const space = [];
 
+const sizes={
+    actionButton:48,
+}
+
 const radii = {
     normal: 8,
     full: 9999,
@@ -26,4 +30,5 @@ export default {
     space,
     radii,
     colors,
+    sizes,
 };
