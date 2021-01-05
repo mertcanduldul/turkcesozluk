@@ -7,11 +7,24 @@ import Box from '../components/box'
 import Text from '../components/text'
 import { ActionButton, ActionButtonTitle } from '../components/action-button'
 import theme from '../utils/theme'
-import { DetailSummaryItemContainer, DetailSummaryItemTitle, DetailSummaryItemSummary } from '../components/detail-summary-item'
+import DetailSummaryItemContainer from '../components/detail-summary-item'
 
 import { Favorite, SoundSolid, Hand } from '../components/icons'
+import { LoaderText } from '../components/LoaderText'
 
-export default function DetailView() {
+export default function DetailView({ route }) {
+    const keyword = route.params?.keyword;
+    const [data, setData] = React.useState(null);
+
+    const getDetailData = async () => {
+        const response = await fetch(`https://sozluk.gov.tr/gts?ara=${keyword}`);
+        const data = await response.json();
+        setData(data[0]);
+    }
+    React.useEffect(() => {
+        getDetailData();
+    }, []);
+
     useFocusEffect(
         React.useCallback(() => {
             StatusBar.setBarStyle('dark-content')
@@ -22,12 +35,16 @@ export default function DetailView() {
         <Box as={SafeAreaView} bg="#e1e1e1" flex={1}>
             <Box as={ScrollView} showsVerticalScrollIndicator={false} p={16}>
                 <Box>
-                    <Text fontSize={32} fontWeight="bold">Kalem</Text>
-                    <Text color="textLight" mt={6}>Arapça Kalem</Text>
+                    <Text fontSize={32} fontWeight="bold">{route.params?.keyword}</Text>
+                    {(data?.teleffuz || data?.lisan) ? <Text color="textLight" mt={6}>
+                        {data?.teleffuz && data?.teleffuz}
+                        {data?.lisan}
+                    </Text>
+                        : null}
                 </Box>
                 <Box flexDirection="row" mt={24}>
                     <ActionButton>
-                        <SoundSolid width={24} height={24} color={theme.colors.red} />
+                        <SoundSolid width={24} height={24} color={theme.colors.textLight} />
                     </ActionButton>
                     <ActionButton ml={12}>
                         <Favorite width={24} height={24} color={theme.colors.textLight} />
@@ -38,62 +55,15 @@ export default function DetailView() {
                     </ActionButton>
                 </Box>
                 <Box mt={32}>
-                    <DetailSummaryItemContainer>
-                        <DetailSummaryItemTitle>
-                            Yazma, çizme vb. işlerde kullanılan çeşitli biçimlerde araç
-                    </DetailSummaryItemTitle>
-                        <DetailSummaryItemSummary>
-                            "Kâğıt, kalem, mürekkep, hepsi masanın üstündedir." - Falih Rıfkı Atay
-                    </DetailSummaryItemSummary>
-                    </DetailSummaryItemContainer>
-                    <DetailSummaryItemContainer border>
-                        <DetailSummaryItemTitle>
-                            Yazma, çizme vb. işlerde kullanılan çeşitli biçimlerde araç
-                    </DetailSummaryItemTitle>
-                        <DetailSummaryItemSummary>
-                            "Kâğıt, kalem, mürekkep, hepsi masanın üstündedir." - Falih Rıfkı Atay
-                    </DetailSummaryItemSummary>
-                    </DetailSummaryItemContainer>
-                    <DetailSummaryItemContainer border>
-                        <DetailSummaryItemTitle>
-                            Yazma, çizme vb. işlerde kullanılan çeşitli biçimlerde araç
-                    </DetailSummaryItemTitle>
-                        <DetailSummaryItemSummary>
-                            "Kâğıt, kalem, mürekkep, hepsi masanın üstündedir." - Falih Rıfkı Atay
-                    </DetailSummaryItemSummary>
-                    </DetailSummaryItemContainer>
-                    <DetailSummaryItemContainer border>
-                        <DetailSummaryItemTitle>
-                            Yazma, çizme vb. işlerde kullanılan çeşitli biçimlerde araç
-                    </DetailSummaryItemTitle>
-                        <DetailSummaryItemSummary>
-                            "Kâğıt, kalem, mürekkep, hepsi masanın üstündedir." - Falih Rıfkı Atay
-                    </DetailSummaryItemSummary>
-                    </DetailSummaryItemContainer>
-                    <DetailSummaryItemContainer border>
-                        <DetailSummaryItemTitle>
-                            Yazma, çizme vb. işlerde kullanılan çeşitli biçimlerde araç
-                    </DetailSummaryItemTitle>
-                        <DetailSummaryItemSummary>
-                            "Kâğıt, kalem, mürekkep, hepsi masanın üstündedir." - Falih Rıfkı Atay
-                    </DetailSummaryItemSummary>
-                    </DetailSummaryItemContainer>
-                    <DetailSummaryItemContainer border>
-                        <DetailSummaryItemTitle>
-                            Yazma, çizme vb. işlerde kullanılan çeşitli biçimlerde araç
-                    </DetailSummaryItemTitle>
-                        <DetailSummaryItemSummary>
-                            "Kâğıt, kalem, mürekkep, hepsi masanın üstündedir." - Falih Rıfkı Atay
-                    </DetailSummaryItemSummary>
-                    </DetailSummaryItemContainer>
-                    <DetailSummaryItemContainer border>
-                        <DetailSummaryItemTitle>
-                            Yazma, çizme vb. işlerde kullanılan çeşitli biçimlerde araç
-                    </DetailSummaryItemTitle>
-                        <DetailSummaryItemSummary>
-                            "Kâğıt, kalem, mürekkep, hepsi masanın üstündedir." - Falih Rıfkı Atay
-                    </DetailSummaryItemSummary>
-                    </DetailSummaryItemContainer>
+                    {data ? data.anlamlarListe.map(item => (
+                        <DetailSummaryItemContainer data={item} border={item.anlam_sira !== "1"} key={item.anlam_sira} />
+                    )) : [1, 2, 3].map(index => (
+                        <DetailSummaryItemContainer border={index !== 1} key={index}>
+                            <LoaderText />
+                            <LoaderText width={200} mt={10} />
+                        </DetailSummaryItemContainer>
+                    ))
+                    }
                 </Box>
             </Box>
         </Box>

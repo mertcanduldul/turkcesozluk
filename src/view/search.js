@@ -25,31 +25,6 @@ const DATA = [
         title: 'Third Item 3',
         summary: 'açıklama 3'
     },
-    {
-        id: '58694a05-3da1-471f-bd96-145571e29d72',
-        title: 'Third Item 3',
-        summary: 'açıklama 3'
-    },
-    {
-        id: '58694a04-3da1-471f-bd96-145571e29d72',
-        title: 'Third Item 3',
-        summary: 'açıklama 3'
-    },
-    {
-        id: '58694a03-3da1-471f-bd96-145571e29d72',
-        title: 'Third Item 3',
-        summary: 'açıklama 3'
-    },
-    {
-        id: '58694a02-3da1-471f-bd96-145571e29d72',
-        title: 'Third Item 3',
-        summary: 'açıklama 3'
-    },
-    {
-        id: '58694a01-3da1-471f-bd96-145571e29d72',
-        title: 'Third Item 3',
-        summary: 'açıklama 3'
-    }
 ]
 
 function SearchView({ navigation }) {
@@ -88,12 +63,18 @@ function SearchView({ navigation }) {
                             <SuggestionCard
                                 data={homeData?.kelime[0]}
                                 title="Bir Kelime"
-                                onPress={() => navigation.navigate('Detail', { title: homeData?.kelime[0].madde })}
+                                onPress={() => navigation.navigate('Detail', {
+                                    title: homeData?.kelime[0].madde,
+                                    keyword: homeData?.kelime[0].madde
+                                })}
                             />
                             <SuggestionCard
                                 data={homeData?.atasoz[0]}
                                 title="Bir deyim - bir Atasözü"
-                                onPress={() => navigation.navigate('Detail', { title: homeData?.atasoz[0].madde })}
+                                onPress={() => navigation.navigate('Detail', {
+                                    title: homeData?.atasoz[0].madde,
+                                    keyword: homeData?.atasoz[0].madde
+                                })}
                                 mt={40}
                             />
                         </Box>
